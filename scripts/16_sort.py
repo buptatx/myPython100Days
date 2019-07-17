@@ -34,8 +34,33 @@ class SortTest(object):
 
         return items
 
+    @staticmethod
+    def merge_sorted(items, cmp=lambda x,y:x<=y):
+        if len(items) < 2:
+            return items[:]
+        mid = len(items)//2
+        left = SortTest.merge_sorted(items[:mid], cmp)
+        right = SortTest.merge_sorted(items[mid:], cmp)
+        return SortTest.merge(left, right, cmp)
+
+    @staticmethod
+    def merge(items1, items2, cmp):
+        items = []
+        idx1, idx2 = 0, 0
+        while idx1<len(items1) and idx2<len(items2):
+            if cmp(items1[idx1], items2[idx2]):
+                items.append(items1[idx1])
+                idx1 += 1
+            else:
+                items.append(items2[idx2])
+                idx2 += 1
+        items += items1[idx1:]
+        items += items2[idx2:]
+        return items
 
 if __name__ == "__main__":
-    test_data = [1, 2, 3, 4, 7, 9, 8, 21, 11]
+    test_data = [1, 4, 3, 2, 7, 9, 8, 21, 11]
     res = SortTest.bubble_sorted(test_data)
+    print(res)
+    res = SortTest.merge_sorted(test_data)
     print(res)
