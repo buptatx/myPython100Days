@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>仓库信息</title>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data: {
+                products:[]
+            },
+            created(){
+                fetch('https://jackfrued.top/api/products')
+                    .then(response=>response.json())
+                    .then(json=>{this.products = json});
+            }
+        })
+    </script>
+</head>
+<body>
+    <div id="app">
+        <h2>仓库信息</h2>
+        <ul>
+            <li v-for="product in products">
+                {{product.name}} - {{product.quantity}}
+                <span v-if="product.quantity === 0">
+                    已售罄</span>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>
