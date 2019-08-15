@@ -252,13 +252,38 @@ def insert_sort(origin_data):
     for i in range(1, nlen):
         temp = origin_data[i]
         temp_idx = 0
+        #单轮确定该元素在已排序子序列中的插入位置
         for j in range(i-1, -1, -1):
+            #如果当前元素比要插入的元素大，则将该元素右移
             if origin_data[j] > origin_data[i]:
                 origin_data[j+1] = origin_data[j]
             else:
                 temp_idx = j+1
                 break
+        #插入元素
         origin_data[temp_idx] = temp
+
+    return origin_data
+
+
+def cmp_sort(origin_data):
+    #比较排序
+    #平均时间复杂度O(n**2)，非稳定的排序
+    nlen = len(origin_data)
+    if nlen <= 1:
+        return origin_data
+
+    for i in range(nlen):
+        max = 0
+        idx = 0
+        #单轮查找出最大的元素的索引以及元素的值
+        for j in range(nlen-i):
+            if origin_data[j] > max:
+                max = origin_data[j]
+                idx = j
+        #将最大的元素移动到列表的末尾
+        origin_data[nlen-1-i] , origin_data[idx] = origin_data[idx], origin_data[nlen-1-i]
+        print(origin_data)
 
     return origin_data
 
@@ -266,7 +291,8 @@ def insert_sort(origin_data):
 def sort_test():
     source = [3, 1, 2, 7, 9, 4, 5, 6]
     #print(bubble_sort(source[:]))
-    print(insert_sort(source[:]))
+    #print(insert_sort(source[:]))
+    print(cmp_sort(source[:]))
 
 
 if __name__ == "__main__":
