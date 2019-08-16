@@ -56,10 +56,12 @@ def split_test():
     res = pattern_alnum.findall(source)
     print(res)
 
+
 def list_remove_duplicate_el_test():
     source = [1,2,3,1,2]
     #使用set集合，集合内的元素不可重复
     print(list(set(source)))
+
 
 def str_to_list_test():
     #如何实现 "1,2,3" 变成 ["1","2","3"]
@@ -175,11 +177,23 @@ def show_even_below_100_test():
     print(" ".join([str(x) for x in range(101) if x%2 == 0]))
 
 
-def strappend_test(num):
+def str_append_test(num):
+    #python中数字、字符串、元组是不可变的
     sstr = "first"
     for i in range(num):
+        #每次循环都需要重新创建一个新的sstr
+        #如果num比较大 会占用较大内存
         sstr += str(i)
     return sstr
+
+
+def str_append_advanced_test(num):
+    sstr = "first"
+    #num比较大的时候生成式也会存在内存占用多的问题
+    #sstr只重新创建一个
+    sstr += "".join([str(i) for i in range(num)])
+    return sstr
+
 
 def re_sub_test():
     #a="张明 98 分"，用 re.sub，将 98 替换为 100
@@ -192,7 +206,6 @@ def date_test():
     interval = int(input("please input days:"))
     #以今天为参考点，距离多少天
     #start_date = datetime.date.today()
-
     #以固定日期为参考点，距离多少天
     start = '20190530'
     start_date = datetime.datetime(int(start[:4]), int(start[4:6]), int(start[6:8]))
@@ -295,6 +308,22 @@ def sort_test():
     print(cmp_sort(source[:]))
 
 
+def carry_bit_test():
+    # 表示把8进制的54转换成十进制数并输出结果。
+    # 8可以是2、8，10，16等进制数
+    num = int(input("please input number:"))
+    bit = int(input("please input bit(1~10):"))
+    pass
+
+
+def carry_bit_to_dec():
+    num = int(input("please input number:"))
+    bit = int(input("please input bit(1~10):"))
+
+    num_str = str(num)[::-1]
+    print(sum([int(num_str[i])*(bit**i) for i in range(len(num_str))]))
+
+
 if __name__ == "__main__":
     # create_sequence()
     # captain_test()
@@ -317,9 +346,12 @@ if __name__ == "__main__":
     # print(check_2_test())
     # print(check_2_bit_operate_test())
     # show_even_below_100_test()
-    # print(strappend_test(10))
+    # print(str_append_test(10))
+    # print(str_append_advanced_test(10))
     # re_sub_test()
     # date_test()
     # test_multi_shell()
     # filter_list_test()
-    sort_test()
+    # sort_test()
+    carry_bit_test()
+    # carry_bit_to_dec()
