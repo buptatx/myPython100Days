@@ -313,7 +313,12 @@ def carry_bit_test():
     # 8可以是2、8，10，16等进制数
     num = int(input("please input number:"))
     bit = int(input("please input bit(1~10):"))
-    pass
+    res = list()
+    while num != 0:
+        res.append(num%bit)
+        num = num//bit
+
+    print("".join([str(x) for x in res[::-1]]))
 
 
 def carry_bit_to_dec():
