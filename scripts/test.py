@@ -409,6 +409,18 @@ def carry_bit_to_dec():
     print(sum([int(num_str[i])*(bit**i) for i in range(len(num_str))]))
 
 
+def check_ipv4():
+    check_str = input("please input data:")
+    p = re.compile("^(25[0-5]|^2[0-4]\d|^1\d{2}|^[1-9]\d|^[1-9])(\.(25[0-5]|2[0-4]\d|1\d{2}|[1-9]\d|\d)){3}$")
+    print("%s:%s" % (check_str, True if p.match(check_str) else False))
+
+
+def is_ipv4():
+    check_str = input("please input data:")
+    res = True if [1]*4 == [x.isdigit() and 0 <= int(x) <= 255 for x in check_str.split(".")] else False
+    print("%s:%s" % (check_str, res))
+
+
 if __name__ == "__main__":
     # create_sequence()
     # captain_test()
@@ -437,6 +449,8 @@ if __name__ == "__main__":
     # date_test()
     # test_multi_shell()
     # filter_list_test()
-    sort_test()
+    # sort_test()
     # carry_bit_test()
     # carry_bit_to_dec()
+    # check_ipv4()
+    is_ipv4()
