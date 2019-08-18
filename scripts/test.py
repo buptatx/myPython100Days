@@ -301,11 +301,91 @@ def cmp_sort(origin_data):
     return origin_data
 
 
+def merge_sort(s_list):
+    #归并排序使用分而治之的方法
+    #平均时间复杂度nlog(n)
+    #稳定的排序
+    if len(s_list) == 1:
+        return s_list
+
+    c = len(s_list)//2
+    #对整个列表排序就是对 左侧子列表排序 右侧子列表排序
+    #然后将两个排序后的子列表 结合
+    left = merge_sort(s_list[:c])
+    right = merge_sort(s_list[c:])
+    return combine_merge(left, right)
+
+
+def combine_merge(list1, list2):
+    temp = []
+    i = 0
+    j = 0
+    list_1_len = len(list1)
+    list_2_len = len(list2)
+
+    #对于两个子序列 值小的添加到结果列表并将游标前移
+    while i < list_1_len and j < list_2_len:
+        if list1[i] <= list2[j]:
+            temp.append(list1[i])
+            i += 1
+        else:
+            temp.append(list2[j])
+            j += 1
+
+    #添加剩余部分
+    temp.extend(list1[i:])
+    temp.extend(list2[j:])
+
+    return temp
+
+
+def quick_sort(source):
+    #快速排序 平均时间复杂度nlog(n)
+    #稳定排序
+    #每次使用的空间只有1
+    if len(source) == 1:
+        return source
+
+    #对列表中的数据进行排序，返回游标
+    #游标左侧的数比游标小
+    #游标右侧的数比游标大
+    q = partiton(source)
+    #递归
+    #对左右子列表再进行排序
+    left = quick_sort(source[:q])
+    right = quick_sort(source[q:])
+
+    return left + right
+
+
+def partiton(src_list):
+    if len(src_list) == 1:
+        return src_list
+
+    temp = src_list[-1]
+    i = j = 0
+    sle_idx = len(src_list) - 1
+    #采用了类似与插入排序的思想
+    #使用两个游标
+    #j依次遍历列表，遇到比末尾元素大的就将j和i的元素交换
+    #保证左侧的元素比列表尾元素小
+    while i < sle_idx and j < sle_idx:
+        if src_list[j] < temp:
+            src_list[i], src_list[j] = src_list[j], src_list[i]
+            i += 1
+        j += 1
+
+    src_list[i], src_list[-1] = src_list[-1], src_list[i]
+    return i
+
+
 def sort_test():
     source = [3, 1, 2, 7, 9, 4, 5, 6]
-    #print(bubble_sort(source[:]))
-    #print(insert_sort(source[:]))
-    print(cmp_sort(source[:]))
+    # print(bubble_sort(source[:]))
+    # print(insert_sort(source[:]))
+    # print(cmp_sort(source[:]))
+    # print(merge_sort(source[:]))
+    print(quick_sort(source[:]))
 
 
 def carry_bit_test():
@@ -357,6 +437,6 @@ if __name__ == "__main__":
     # date_test()
     # test_multi_shell()
     # filter_list_test()
-    # sort_test()
-    carry_bit_test()
+    sort_test()
+    # carry_bit_test()
     # carry_bit_to_dec()
