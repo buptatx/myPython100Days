@@ -416,6 +416,7 @@ def check_ipv4():
 
 
 def is_ipv4():
+    #没有校验首部份为0的情况
     check_str = input("please input data:")
     res = True if [1]*4 == [x.isdigit() and 0 <= int(x) <= 255 for x in check_str.split(".")] else False
     print("%s:%s" % (check_str, res))
