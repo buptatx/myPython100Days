@@ -3,7 +3,7 @@
 import re
 import datetime
 from itertools import product
-from random import shuffle
+from random import shuffle, randint
 
 
 def create_sequence():
@@ -98,6 +98,17 @@ def list_ele_shuffle_test():
     for i in range(4):
         shuffle(source)
         print(source)
+
+
+def list_ele_shuffle_v2_test():
+    source = ["A","2","3","4","5","6","7","8","9","10","J","Q","K"]
+
+    for i in range(1, len(source)):
+        idx = randint(0, i)
+        value = source.pop(idx)
+        source.append(value)
+
+    print(source)
 
 
 def list_del_pop_test():
@@ -454,4 +465,5 @@ if __name__ == "__main__":
     # carry_bit_test()
     # carry_bit_to_dec()
     # check_ipv4()
-    is_ipv4()
+    # is_ipv4()
+    list_ele_shuffle_v2_test()
