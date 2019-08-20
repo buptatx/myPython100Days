@@ -4,6 +4,7 @@ import re
 import datetime
 from itertools import product
 from random import shuffle, randint
+from math import log
 
 
 def create_sequence():
@@ -433,6 +434,29 @@ def is_ipv4():
     print("%s:%s" % (check_str, res))
 
 
+def create_seq(n):
+    #起始值为0，求反01，作为输入求反0110，再求反
+    #第一组 0 第二组 01 第三组 0110 第四组 01101001 第五组 0110100110010110
+    #返回第n组的序列
+    if n == 1:
+        return "0"
+    elif n == 2:
+        return "01"
+    else:
+        return create_seq(n-1)+create_seq(n-1)[::-1]
+
+
+def cal_loop(n):
+    for i in range(n):
+        if 2**i >= 2*n and 2**(i-1) <= 2*n:
+            return i
+
+
+def cal_idx(n):
+    loop = cal_loop(n)
+    seq = create_seq(loop)
+
+
 if __name__ == "__main__":
     # create_sequence()
     # captain_test()
@@ -466,4 +490,6 @@ if __name__ == "__main__":
     # carry_bit_to_dec()
     # check_ipv4()
     # is_ipv4()
-    list_ele_shuffle_v2_test()
+    # list_ele_shuffle_v2_test()
+    print(create_seq(5))
+    print(cal_loop(5))
