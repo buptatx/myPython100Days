@@ -471,6 +471,11 @@ def cal_idx(n):
                 return i
 
 
+def left_move_test():
+    steps = int(input("please input steps for left move:"))
+    print(1<<steps)
+
+
 if __name__ == "__main__":
     # create_sequence()
     # captain_test()
@@ -507,6 +512,7 @@ if __name__ == "__main__":
     # list_ele_shuffle_v2_test()
     # print(create_seq(5))
     # print(cal_loop(5))
-    print(cal_idx(5))
-    print(cal_idx(0))
-    print(cal_idx(1))
+    # print(cal_idx(5))
+    # print(cal_idx(0))
+    # print(cal_idx(1))
+    left_move_test()
