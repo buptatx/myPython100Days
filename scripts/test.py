@@ -440,10 +440,10 @@ def create_seq(n):
     #返回第n组的序列
     if n == 1:
         return "0"
-    elif n == 2:
-        return "01"
     else:
-        return create_seq(n-1)+create_seq(n-1)[::-1]
+        pre = create_seq(n-1)
+        #当前轮的序列 = 上一轮的序列 + 上一轮序列的各位取反
+        return pre + "".join(["0" if x == "1" else "1" for x in pre])
 
 
 def cal_loop(n):
@@ -452,8 +452,20 @@ def cal_loop(n):
         return n + 1
 
     for i in range(n):
+        #每两个字符中包含一个1，第n个1意味着有2n个字符
+        #每轮的字符数符合2**n，计算第n个字符在第几轮
         if 2**(i-1) <= 2*n and 2*n <= 2**i:
             return i + 1
+
+
+def find_n_1(seq, n):
+    count = 0
+    for i in range(0, len(seq)):
+        #平均时间复杂度O(n)的遍历
+        if seq[i] == "1":
+            count += 1
+            if count == n:
+                return i
 
 
 def cal_idx(n):
@@ -462,18 +474,27 @@ def cal_idx(n):
 
     loop = cal_loop(n)
     seq = create_seq(loop)
-    count = 0
-    print(seq)
-    for i in range(0, len(seq)):
-        if seq[i] == "1":
-            count += 1
-            if count == n:
-                return i
+    return find_n_1(seq, n)
 
 
 def left_move_test():
     steps = int(input("please input steps for left move:"))
     print(1<<steps)
+
+
+def cal_n_one_idx_test(n):
+    if n <1 or not isinstance(int, n):
+        return -1
+    elif n == 1:
+        return 1
+
+    loop = 0
+    for i in range(2, n):
+        if 2**(i-1) <= 2*n and 2*n <= 2**i:
+            loop = i
+            break
+
+    return cal_n_one_idx_test() + 2**loop
 
 
 if __name__ == "__main__":
@@ -510,9 +531,9 @@ if __name__ == "__main__":
     # check_ipv4()
     # is_ipv4()
     # list_ele_shuffle_v2_test()
-    # print(create_seq(5))
+    # print(create_seq(2))
     # print(cal_loop(5))
-    # print(cal_idx(5))
+    print(cal_idx(5))
     # print(cal_idx(0))
     # print(cal_idx(1))
-    left_move_test()
+    # left_move_test()
