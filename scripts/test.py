@@ -447,14 +447,28 @@ def create_seq(n):
 
 
 def cal_loop(n):
+    #计算是第几轮
+    if n < 2:
+        return n + 1
+
     for i in range(n):
-        if 2**i >= 2*n and 2**(i-1) <= 2*n:
-            return i
+        if 2**(i-1) <= 2*n and 2*n <= 2**i:
+            return i + 1
 
 
 def cal_idx(n):
+    if n < 1:
+        return 0
+
     loop = cal_loop(n)
     seq = create_seq(loop)
+    count = 0
+    print(seq)
+    for i in range(0, len(seq)):
+        if seq[i] == "1":
+            count += 1
+            if count == n:
+                return i
 
 
 if __name__ == "__main__":
@@ -491,5 +505,8 @@ if __name__ == "__main__":
     # check_ipv4()
     # is_ipv4()
     # list_ele_shuffle_v2_test()
-    print(create_seq(5))
-    print(cal_loop(5))
+    # print(create_seq(5))
+    # print(cal_loop(5))
+    print(cal_idx(5))
+    print(cal_idx(0))
+    print(cal_idx(1))
