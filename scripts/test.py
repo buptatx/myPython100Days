@@ -470,7 +470,7 @@ def find_n_1(seq, n):
 
 def cal_idx(n):
     if n < 1:
-        return 0
+        return -1
 
     loop = cal_loop(n)
     seq = create_seq(loop)
@@ -482,19 +482,28 @@ def left_move_test():
     print(1<<steps)
 
 
-def cal_n_one_idx_test(n):
-    if n <1 or not isinstance(int, n):
+def cal_n_idx_test(n, c_int):
+    """
+    计算第n个数的索引值
+    :param n: 求的n
+    :param c_int:要求的数 合法值 0，1
+    :return: 第n个数的索引值
+    """
+    #健壮性判断 如果n<1或者n不是整数，或者c_int不是0，1都会返回-1
+    if n < 1 or not isinstance(n, int) or c_int not in [0, 1]:
         return -1
+    #第一个0和第一个1的索引
     elif n == 1:
-        return 1
+        return 0 if c_int == 0 else 1
 
+    #计算第n个0或1是属于第几轮循环
     loop = 0
-    for i in range(2, n):
+    for i in range(2, n+1):
         if 2**(i-1) <= 2*n and 2*n <= 2**i:
             loop = i
             break
-
-    return cal_n_one_idx_test() + 2**loop
+    #求第n个1的位置等于 第(n-轮数)个0的位置+2*轮数个元素的偏移
+    return cal_n_idx_test(n-loop, 0 if c_int == 1 else 1) + 2*loop
 
 
 if __name__ == "__main__":
@@ -533,7 +542,14 @@ if __name__ == "__main__":
     # list_ele_shuffle_v2_test()
     # print(create_seq(2))
     # print(cal_loop(5))
-    print(cal_idx(5))
-    # print(cal_idx(0))
+    print(cal_idx(130))
+    # print(cal_idx(7))
+    # print(cal_idx(5))
     # print(cal_idx(1))
+    # print(cal_idx(0))
     # left_move_test()
+    print(cal_n_idx_test(130, 1))
+    # print(cal_n_idx_test(7, 1))
+    # print(cal_n_idx_test(5, 1))
+    # print(cal_n_idx_test(1, 1))
+    # print(cal_n_idx_test(0, 1))
